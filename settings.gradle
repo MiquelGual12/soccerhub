@@ -9,3 +9,6 @@
 
 rootProject.name = 'soccerhub'
 include('app', 'domain', 'utilities')
+include 'utilities:test'
+findProject(':utilities:test')?.name = 'test'
+
