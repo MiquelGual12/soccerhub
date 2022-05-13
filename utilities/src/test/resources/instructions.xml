@@ -1,4 +1,5 @@
 <instructions>
+    <version>1.0.0</version>
     <command>use soccerhub;</command>
     <command>insert into country values (1, "Spain", 47000000);</command>
 </instructions>
