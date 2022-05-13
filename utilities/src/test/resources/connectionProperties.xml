@@ -1,0 +1,2 @@
+
+<ConnectionProperties><url>jdbc:mysql://localhost:3306/mysql</url><username>root</username><password></password></ConnectionProperties>
