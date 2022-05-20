@@ -7,10 +7,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class XmlSchemaLoades implements SchemaLoader{
+public class XmlSchemaLoader implements SchemaLoader{
     private final Schema schema;
 
-    public XmlSchemaLoades(String path) {
+    public XmlSchemaLoader(String path) {
         var xmlMapper = new XmlMapper();
         try {
             var xml = Files.readString(Path.of(path));
