@@ -2,12 +2,11 @@ package cat.uvic.teknos.m06.soccerhub.domain.models;
 
 import java.util.List;
 
-public class NationalTeam {
+public class League {
     private int id;
-    private int trophies;
+    private String name;
     private Country CountryId;
-
-    private List<Player> players;
+    private List<Team> teams;
 
     public int getId() {
         return id;
@@ -17,12 +16,12 @@ public class NationalTeam {
         this.id = id;
     }
 
-    public int getTrophies() {
-        return trophies;
+    public String getName() {
+        return name;
     }
 
-    public void setTrophies(int trophies) {
-        this.trophies = trophies;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Country getCountryId() {
@@ -33,11 +32,11 @@ public class NationalTeam {
         CountryId = countryId;
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<Team> getTeams() {
+        return teams;
     }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 }
