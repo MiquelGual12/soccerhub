@@ -26,7 +26,7 @@ public class JpaLeagueRepositoryTest {
         var league = new League();
         league.setName("MSL");
         league.setId(1);
-        league.setCountryId(1);
+
 
         assertDoesNotThrow(() -> {
             repository.save(league);

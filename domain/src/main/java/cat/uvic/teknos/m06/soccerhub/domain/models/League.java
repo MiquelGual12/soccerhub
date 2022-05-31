@@ -9,7 +9,7 @@ public class League {
     private int id;
     private String name;
     @Transient
-    private Country CountryId;
+    private Country country;
     @Transient
     private List<Team> teams;
 
@@ -30,11 +30,10 @@ public class League {
     }
 
     public Country getCountryId() {
-        return CountryId;
+        return country;
     }
 
-    public void setCountryId(int countryId) {
-        CountryId = countryId;
+    public void setCountryId(Country countryId) {country = countryId;
     }
 
     public List<Team> getTeams() {
