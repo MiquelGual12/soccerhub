@@ -1,6 +1,6 @@
 package cat.uvic.teknos.m06.soccerhub.domain.repositories;
 
-import cat.uvic.teknos.m06.soccerhub.domain.models.Country;
+import cat.uvic.teknos.m06.soccerhub.domain.models.League;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,45 +10,45 @@ import javax.persistence.Persistence;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JpaCountryRepositoryTest {
+public class JpaLeagueRepositoryTest {
     public static final int MODEL_TO_DELETE = 2;
     private static EntityManagerFactory entityManagerFactory;
-    private static Repository<Country, Integer> repository;
+    private static Repository<League, Integer> repository;
 
     @BeforeAll
     static void setUp() {
         entityManagerFactory = Persistence.createEntityManagerFactory("soccerhub_bd");
-        repository = new JpaCountryRepository(entityManagerFactory);
+        repository = new JpaLeagueRepository(entityManagerFactory);
     }
 
     @Test
     void saveInsert() {
-        var country = new Country();
-        country.setName("Spain");
-        country.setId(1);
-        country.setPoblation(47350000);
+        var league = new League();
+        league.setName("MSL");
+        league.setId(1);
+        league.setCountryId(1);
 
         assertDoesNotThrow(() -> {
-            repository.save(country);
+            repository.save(league);
         });
 
-        assertTrue(country.getId() > 0);
+        assertTrue(league.getId() > 0);
     }
 
     @Test
     void saveUpdate() {
-        var country = new Country();
-        country.setId(1);
-        country.setName("United States");
+        var league = new League();
+        league.setId(1);
+        league.setName("MLS");
 
         assertDoesNotThrow(() -> {
-            repository.save(country);
+            repository.save(league);
         });
 
         var entityManager = entityManagerFactory.createEntityManager();
-        var modifiedCountry = entityManager.find(Country.class,1 );
+        var modifiedLeague = entityManager.find(League.class,1 );
 
-        assertEquals("", modifiedCountry.getName());
+        assertEquals("", modifiedLeague.getName());
         entityManager.close();
     }
 
@@ -69,17 +69,17 @@ public class JpaCountryRepositoryTest {
 
     @Test
     void getById() {
-        var country = repository.getById(2);
+        var league = repository.getById(2);
 
-        assertNotNull(country);
+        assertNotNull(league);
     }
 
     @Test
     void getAll() {
-        var countries = repository.getAll();
+        var leagues = repository.getAll();
 
-        assertNotNull(countries);
-        assertTrue(countries.size() > 0);
+        assertNotNull(leagues);
+        assertTrue(leagues.size() > 0);
     }
 
 }

@@ -33,7 +33,7 @@ public class League {
         return CountryId;
     }
 
-    public void setCountryId(Country countryId) {
+    public void setCountryId(int countryId) {
         CountryId = countryId;
     }
 
