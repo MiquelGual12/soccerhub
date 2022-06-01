@@ -1,6 +1,6 @@
 package cat.uvic.teknos.m06.soccerhub.domain.repositories;
 
-import cat.uvic.teknos.m06.soccerhub.domain.models.Team;
+import cat.uvic.teknos.m06.soccerhub.domain.models.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,47 +10,48 @@ import javax.persistence.Persistence;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JpaTeamRepositoryTest {
+public class JpaPlayerRepositoryTest {
+
     public static final int MODEL_TO_DELETE = 2;
     private static EntityManagerFactory entityManagerFactory;
-    private static Repository<Team, Integer> repository;
+    private static Repository<Player, Integer> repository;
 
     @BeforeAll
     static void setUp() {
         entityManagerFactory = Persistence.createEntityManagerFactory("soccerhub_bd");
-        repository = new JpaTeamRepository(entityManagerFactory);
+        repository = new JpaPlayerRepository(entityManagerFactory);
     }
 
     @Test
     void saveInsert() {
-        var team = new Team();
-        team.setId(1);
-        team.setName("F.C.Barcelona");
-        team.setCity("Barcelona");
-        team.setTrophies(4);
+        var player = new Player();
+        player.setId(1);
+        player.setName("Leo");
+        player.setSurname("Messi");
+        player.setAge(33);
 
 
         assertDoesNotThrow(() -> {
-            repository.save(team);
+            repository.save(player);
         });
 
-        assertTrue(team.getId() > 0);
+        assertTrue(player.getId() > 0);
     }
 
     @Test
     void saveUpdate() {
-        var team = new Team();
-        team.setId(1);
-        team.setTrophies(5);
+        var player = new Player();
+        player.setId(1);
+        player.setAge(34);
 
         assertDoesNotThrow(() -> {
-            repository.save(team);
+            repository.save(player);
         });
 
         var entityManager = entityManagerFactory.createEntityManager();
-        var modifiedTeam = entityManager.find(Team.class,1 );
+        var modifiedPlayer = entityManager.find(Player.class,1 );
 
-        assertEquals("", modifiedTeam.getId());
+        assertEquals("", modifiedPlayer.getId());
         entityManager.close();
     }
 
@@ -71,17 +72,16 @@ public class JpaTeamRepositoryTest {
 
     @Test
     void getById() {
-        var team = repository.getById(2);
+        var player = repository.getById(2);
 
-        assertNotNull(team);
+        assertNotNull(player);
     }
 
     @Test
     void getAll() {
-        var teams = repository.getAll();
+        var players = repository.getAll();
 
-        assertNotNull(teams);
-        assertTrue(teams.size() > 0);
+        assertNotNull(players);
+        assertTrue(players.size() > 0);
     }
-
 }
