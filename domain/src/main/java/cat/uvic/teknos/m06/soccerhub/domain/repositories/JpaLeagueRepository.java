@@ -30,10 +30,10 @@ public class JpaLeagueRepository implements Repository<League, Integer> {
         entityManager.getTransaction().commit();
     }
 
-    private void update(League country) {
+    private void update(League league) {
         var entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.merge(country);
+        entityManager.merge(league);
         entityManager.getTransaction().commit();
     }
 

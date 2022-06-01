@@ -1,6 +1,7 @@
 package cat.uvic.teknos.m06.soccerhub.domain.repositories;
 
 import cat.uvic.teknos.m06.soccerhub.domain.models.Country;
+import cat.uvic.teknos.m06.soccerhub.domain.models.League;
 import cat.uvic.teknos.m06.soccerhub.domain.models.NationalTeam;
 
 import javax.persistence.EntityManagerFactory;
@@ -29,10 +30,10 @@ public class JpaNationalTeamRepository implements Repository<NationalTeam, Integ
         entityManager.getTransaction().commit();
     }
 
-    private void update(NationalTeam country) {
+    private void update(NationalTeam nationalTeam) {
         var entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.merge(country);
+        entityManager.merge(nationalTeam);
         entityManager.getTransaction().commit();
     }
 
@@ -40,20 +41,20 @@ public class JpaNationalTeamRepository implements Repository<NationalTeam, Integ
     public void delete(Integer id) {
         var entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        var country = entityManager.find(Country.class, id);
-        if (country != null) {
-            entityManager.remove(country);
+        var nationalTeam = entityManager.find(NationalTeam.class, id);
+        if (nationalTeam != null) {
+            entityManager.remove(nationalTeam);
         }
         entityManager.getTransaction().commit();
     }
 
     @Override
-    public Country getById(Integer id) {
+    public NationalTeam getById(Integer id) {
         var entityManager = entityManagerFactory.createEntityManager();
-        var country = entityManager.find(Country.class, id);
+        var nationalTeam = entityManager.find(NationalTeam.class, id);
         entityManager.close();
 
-        return country;
+        return nationalTeam;
     }
 
     @Override
