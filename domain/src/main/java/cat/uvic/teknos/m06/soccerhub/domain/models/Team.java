@@ -1,13 +1,18 @@
 package cat.uvic.teknos.m06.soccerhub.domain.models;
 
+import javax.persistence.*;
 import java.util.List;
-
+@Entity
 public class Team {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String city;
     private int trophies;
+    @Transient
     private League LeagueId;
+    @Transient
     private List<Player> players;
 
     public int getId() {

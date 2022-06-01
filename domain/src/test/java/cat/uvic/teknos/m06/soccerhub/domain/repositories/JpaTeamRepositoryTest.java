@@ -1,7 +1,7 @@
 package cat.uvic.teknos.m06.soccerhub.domain.repositories;
 
-
 import cat.uvic.teknos.m06.soccerhub.domain.models.NationalTeam;
+import cat.uvic.teknos.m06.soccerhub.domain.models.Team;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,45 +11,48 @@ import javax.persistence.Persistence;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JpaNationalTeamRepositoryTest {
+
+public class JpaTeamRepositoryTest {
     public static final int MODEL_TO_DELETE = 2;
     private static EntityManagerFactory entityManagerFactory;
-    private static Repository<NationalTeam, Integer> repository;
+    private static Repository<Team, Integer> repository;
 
     @BeforeAll
     static void setUp() {
         entityManagerFactory = Persistence.createEntityManagerFactory("soccerhub_bd");
-        repository = new JpaNationalTeamRepository(entityManagerFactory);
+        repository = new JpaTeamRepository(entityManagerFactory);
     }
 
     @Test
     void saveInsert() {
-        var nationalTeam = new NationalTeam();
-        nationalTeam.setId(1);
-        nationalTeam.setTrophies(15);
+        var team = new Team();
+        team.setId(1);
+        team.setName("F.C.Barcelona");
+        team.setCity("Barcelona");
+        team.setTrophies(4);
 
 
         assertDoesNotThrow(() -> {
-            repository.save(nationalTeam);
+            repository.save(team);
         });
 
-        assertTrue(nationalTeam.getId() > 0);
+        assertTrue(team.getId() > 0);
     }
 
     @Test
     void saveUpdate() {
-        var nationalTeam = new NationalTeam();
-        nationalTeam.setId(1);
-        nationalTeam.setTrophies(16);
+        var team = new Team();
+        team.setId(1);
+        team.setTrophies(5);
 
         assertDoesNotThrow(() -> {
-            repository.save(nationalTeam);
+            repository.save(team);
         });
 
         var entityManager = entityManagerFactory.createEntityManager();
-        var modifiedNationalTeam = entityManager.find(NationalTeam.class,1 );
+        var modifiedTeam = entityManager.find(Team.class,1 );
 
-        assertEquals("", modifiedNationalTeam.getId());
+        assertEquals("", modifiedTeam.getId());
         entityManager.close();
     }
 
@@ -70,17 +73,17 @@ public class JpaNationalTeamRepositoryTest {
 
     @Test
     void getById() {
-        var nationalTeam = repository.getById(2);
+        var team = repository.getById(2);
 
-        assertNotNull(nationalTeam);
+        assertNotNull(team);
     }
 
     @Test
     void getAll() {
-        var nationalTeams = repository.getAll();
+        var teams = repository.getAll();
 
-        assertNotNull(nationalTeams);
-        assertTrue(nationalTeams.size() > 0);
+        assertNotNull(teams);
+        assertTrue(teams.size() > 0);
     }
 
 }
