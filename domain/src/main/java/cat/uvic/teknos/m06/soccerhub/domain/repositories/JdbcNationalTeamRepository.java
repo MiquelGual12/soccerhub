@@ -110,10 +110,3 @@ public class JdbcNationalTeamRepository implements Repository<NationalTeam, Inte
     }
 
 }
-
-
-
-
-
-
-}

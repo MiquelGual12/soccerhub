@@ -35,7 +35,7 @@ public class JdbcCountryRepository implements Repository<Country, Integer> {
 
     @Override
     public void delete(Integer model) {
-        
+
     }
 
     private void update(Country country) {
