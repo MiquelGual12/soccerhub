@@ -81,7 +81,7 @@ public class JdbcNationalTeamRepository implements Repository<NationalTeam, Inte
             var resultSet = prepareStatement.executeQuery();
             if (resultSet.next()) {
                 team1 = new NationalTeam();
-                team1.setId(resultSet.getInt("countryId"));
+                team1.setId(resultSet.getInt("nationalTeamId"));
                 team1.setTrophies(resultSet.getInt("trophies"));
             }
             return team1;

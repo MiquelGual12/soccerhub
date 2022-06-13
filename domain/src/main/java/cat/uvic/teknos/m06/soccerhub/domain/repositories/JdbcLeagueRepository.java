@@ -80,7 +80,7 @@ public class JdbcLeagueRepository implements Repository<League, Integer>{
             var resultSet = prepareStatement.executeQuery();
             if (resultSet.next()) {
                 league = new League();
-                league.setId(resultSet.getInt("countryId"));
+                league.setId(resultSet.getInt("leagueId"));
                 league.setName(resultSet.getString("name"));
             }
 

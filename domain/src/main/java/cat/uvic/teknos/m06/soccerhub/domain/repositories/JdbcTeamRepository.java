@@ -80,7 +80,7 @@ public class JdbcTeamRepository implements  Repository<Team, Integer>{
             var resultSet = prepareStatement.executeQuery();
             if (resultSet.next()) {
                 team = new Team();
-                team.setId(resultSet.getInt("countryId"));
+                team.setId(resultSet.getInt("teamId"));
                 team.setName(resultSet.getString("name"));
             }
 
