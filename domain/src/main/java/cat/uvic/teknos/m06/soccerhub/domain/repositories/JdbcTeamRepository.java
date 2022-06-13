@@ -1,7 +1,7 @@
 package cat.uvic.teknos.m06.soccerhub.domain.repositories;
 
 import cat.uvic.teknos.m06.soccerhub.domain.exceptions.RepositoryException;
-import cat.uvic.teknos.m06.soccerhub.domain.models.League;
+import cat.uvic.teknos.m06.soccerhub.domain.models.Team;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,27 +9,27 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcLeagueRepository implements Repository<League, Integer>{
+public class JdbcTeamRepository implements  Repository<Team, Integer>{
 
-    private static final String insert = "insert into league (leagueId) values (values)";
-    private static final String update = "update league set name = (name) where id = (leagueId)";
-    private static final String selectAll = "select * from league";
-    private static final String Delete = "delete from league where id = (leagueId)";
+    private static final String insert = "insert into team (teamId) values (values)";
+    private static final String update = "update team set name = (name) where id = (teamId)";
+    private static final String selectAll = "select * from team";
+    private static final String Delete = "delete from team where id = (teamId)";
 
     private final Connection connection;
-    public JdbcLeagueRepository(Connection connection){
+    public JdbcTeamRepository(Connection connection){
         this.connection = connection;
     }
 
     @Override
-    public void save(League league) {
-        if (league == null) {
+    public void save(Team team) {
+        if (team == null) {
             throw new RepositoryException("The products is null!");
         }
-        if (league.getId() <= 0) {
-            insert(league);
+        if (team.getId() <= 0) {
+            insert(team);
         } else {
-            update(league);
+            update(team);
         }
     }
 
@@ -38,34 +38,34 @@ public class JdbcLeagueRepository implements Repository<League, Integer>{
 
     }
 
-    private void update(League league) {
+    private void update(Team team) {
         try (var preparedStatement = connection.prepareStatement(update)) {
-            preparedStatement.setString(1, league.getName());
-            preparedStatement.setInt(2, league.getId());
+            preparedStatement.setString(1, team.getName());
+            preparedStatement.setInt(2, team.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RepositoryException("Exception while inserting: " + league, e);
+            throw new RepositoryException("Exception while inserting: " + team, e);
         }
 
     }
 
-    private void insert(League league){
+    private void insert(Team team){
         try(var prepared = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)){
-            prepared.setString(1, league.getName());
+            prepared.setString(1, team.getName());
             prepared.executeUpdate();
             var generatedKeysResultSet = prepared.getGeneratedKeys();
             if (!generatedKeysResultSet.next()) {
-                throw new RepositoryException("Exception while inserting: id not generated" + league);
+                throw new RepositoryException("Exception while inserting: id not generated" + team);
             }
-            league.setId(generatedKeysResultSet.getInt(1));
+            team.setId(generatedKeysResultSet.getInt(1));
         } catch (SQLException e) {
-            throw new RepositoryException("Exception while inserting: " + league, e);
+            throw new RepositoryException("Exception while inserting: " + team, e);
         }
     }
 
-    public void delete(League league) {
+    public void delete(Team team) {
         try (var preparedStatement = connection.prepareStatement(Delete)) {
-            preparedStatement.setInt(1, league.getId());
+            preparedStatement.setInt(1, team.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RepositoryException("Exception while trying to delete", e);
@@ -73,18 +73,18 @@ public class JdbcLeagueRepository implements Repository<League, Integer>{
     }
 
     @Override
-    public League getById(Integer id) {
-        League league = null;
+    public Team getById(Integer id) {
+        Team team = null;
         try (var prepareStatement = connection.prepareStatement(selectAll + "where id = (leagueId)")) {
             prepareStatement.setInt(1, id);
             var resultSet = prepareStatement.executeQuery();
             if (resultSet.next()) {
-                league = new League();
-                league.setId(resultSet.getInt("countryId"));
-                league.setName(resultSet.getString("name"));
+                team = new Team();
+                team.setId(resultSet.getInt("countryId"));
+                team.setName(resultSet.getString("name"));
             }
 
-            return league;
+            return team;
         } catch (SQLException ex) {
             throw new RepositoryException("Exception while excecuting get by id");
         }
@@ -92,21 +92,20 @@ public class JdbcLeagueRepository implements Repository<League, Integer>{
     }
 
     @Override
-    public List<League> getAll() {
-        var leagues = new ArrayList<League>();
+    public List<Team> getAll() {
+        var teams = new ArrayList<Team>();
         try (var statement = connection.createStatement()) {
             var resultSet = statement.executeQuery(selectAll);
             while (resultSet.next()) {
-                var league = new League();
-                league.setId(resultSet.getInt("id"));
-                league.setName(resultSet.getString("name"));
-                leagues.add(league);
+                var team = new Team();
+                team.setId(resultSet.getInt("id"));
+                team.setName(resultSet.getString("name"));
+                teams.add(team);
             }
 
-            return leagues;
+            return teams;
         } catch (SQLException e) {
             throw new RepositoryException("Exception while executing get all");
         }
     }
-
 }
